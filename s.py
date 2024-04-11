@@ -5,17 +5,12 @@ import secrets
 import el_gamal
 
 BANNER = """
-    █████████                            █████   ████                    
- ███░░░░░███                          ░░███   ███░                     
-░███    ░░░   ██████    █████   █████  ░███  ███     ██████  █████ ████
-░░█████████  ░░░░░███  ███░░   ███░░   ░███████     ███░░███░░███ ░███ 
- ░░░░░░░░███  ███████ ░░█████ ░░█████  ░███░░███   ░███████  ░███ ░███ 
- ███    ░███ ███░░███  ░░░░███ ░░░░███ ░███ ░░███  ░███░░░   ░███ ░███ 
-░░█████████ ░░████████ ██████  ██████  █████ ░░████░░██████  ░░███████ 
- ░░░░░░░░░   ░░░░░░░░ ░░░░░░  ░░░░░░  ░░░░░   ░░░░  ░░░░░░    ░░░░░███ 
-                                                              ███ ░███ 
-                                                             ░░██████  
-                                                              ░░░░░░     
+███████╗ █████╗  █████╗ ███████╗██╗  ██╗███████╗██╗   ██╗
+██╔════╝██╔══██╗██╔══██╗██╔════╝██║ ██╔╝██╔════╝╚██╗ ██╔╝
+███████╗███████║███████║███████╗█████╔╝ █████╗   ╚████╔╝ 
+╚════██║██╔══██║██╔══██║╚════██║██╔═██╗ ██╔══╝    ╚██╔╝  
+███████║██║  ██║██║  ██║███████║██║  ██╗███████╗   ██║   
+╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚══════╝   ╚═╝  
 """
 
 # Check if a command line argument is provided for the port number
@@ -38,11 +33,11 @@ active_clients = []  # List of all currently connected users
 def chooseMethod():
     lst = ["DES", "ELGAMAL"]
     print(BANNER)
-    print("W E L C O M E TO S E C U R E C H A T")
-    #print("1- DES (Data encryption standard)")
+    print("🔒 W E L C O M E   T O   S E C U R E   C H A T 🔒")
+    
     print("2- ElGamal encryption Method")
-    num = input("Choose the encryption Method: ")
-    print(lst[int(num) - 1] + " mode has been started")
+    num = input("E N C R Y P T I O N: ")
+    print(f"\033[95m ENCRYPTON MODE HAS BEEN STARTED\033[0m ")
     return num
 
 
@@ -60,7 +55,8 @@ def listen_for_messages(client, username, key, elgamapublickey):
             send_messages_to_all(final_msg)
             print("rsaaaaaaa:   ", final_msg)
         else:
-            print(f"The message send from client {username} is empty")
+            print(f"❌ The message sent from {username} is empty")
+
 
 
 # Function to send message to a single client
@@ -87,10 +83,11 @@ def client_handler(client, key):
             elgamalpublickey = ",".join(map(str, ElgamalKey))
             prompt_message = "SERVER~" + f"{username} added to the chat~" + key + "~" + flagmethod + "~" + elgamalpublickey
             send_messages_to_all(prompt_message)
-            print("Session key successfully generated for " + f"{username } ==>", key)
+            print(f"👥 {username} has joined the chat!")
+            print("🔑 Session key successfully generated for", username)
             break
         else:
-            print("Client username is empty")
+            print("❌ Client username is empty")
     threading.Thread(target=listen_for_messages, args=(client, username, key, elgamalpublickey,)).start()
 
 
@@ -103,13 +100,13 @@ def main():
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     try:
         server.bind(('0.0.0.0', PORT))
-        print(f"Running the server on port {PORT}")
+        print(f"\033[92m🚀 Server is up and running on port {PORT}! Let's start chatting securely! 🚀\033[0m")
     except:
-        print(f"Unable to bind to port {PORT}")
+        print(f"❌ Unable to bind to port {PORT}")
     server.listen(LISTENER_LIMIT)
     while 1:
         client, address = server.accept()
-        print(f"Successfully connected to client {address[0]} {address[1]}")
+        print(f"📡 Successfully connected to client {address[0]} {address[1]}")
         key = ""
         threading.Thread(target=client_handler, args=(client, key,)).start()
 
