@@ -1,8 +1,8 @@
-# SassKey
+# SaasKey
 
 SassKey is a secure chat application implemented in Python using socket programming and ElGamal encryption.
 
-![SassKey Screenshot](./assets/screenshot.png)
+![SaasKey Screenshot](./assets/screenshot.png)
 
 ## Features
 
@@ -20,4 +20,4 @@ SassKey is a secure chat application implemented in Python using socket programm
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/cyb3rcr4t0712/SassKey.git
+   git clone https://github.com/cyb3rcr4t0712/SaasKey.git
